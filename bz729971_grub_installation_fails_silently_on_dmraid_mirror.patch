@@ -1,0 +1,30 @@
+--- 1.0.0.rc16/lib/activate/devmapper.c.bz729971	2012-02-28 14:51:54.000000000 +0100
++++ 1.0.0.rc16/lib/activate/devmapper.c	2012-02-28 15:52:20.000000000 +0100
+@@ -197,9 +197,25 @@
+ 
+ 	if (ret) {
+ 		if (DM_DEVICE_CREATE == type) {
++			uint64_t start, length;
++			char *target_type, *params;	
++
++			/* Set geometry so that grub* is happy. */
++			if (dm_get_next_target(dmt, NULL, &start, &length,
++				   &target_type, &params)) {
++				char cylinders[16];
++
++				length = div_up(length, 255);
++				length = div_up(length, 63);
++				snprintf(cylinders, sizeof(cylinders), "%llu", (long long unsigned) length);
++				dm_task_set_geometry(dmt, cylinders, "255", "63", "0");
++			}
++
+ 			ret = dmraid_uuid(lc, rs, uuid, DM_UUID_LEN, name) &&
+-				dm_task_set_uuid(dmt, uuid) && dm_task_run(dmt);
+-		} else
++			      dm_task_set_uuid(dmt, uuid);
++		}
++
++		if (ret)
+ 			ret = dm_task_run(dmt);
+ 	}
+ 

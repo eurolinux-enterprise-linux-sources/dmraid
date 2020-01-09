@@ -1,0 +1,15 @@
+diff -ruN 1.0.0.rc16.orig/lib/device/scan.c 1.0.0.rc16/lib/device/scan.c
+--- 1.0.0.rc16.orig/lib/device/scan.c	2011-12-02 15:04:54.114129000 -0500
++++ 1.0.0.rc16/lib/device/scan.c	2011-12-02 15:05:37.366345000 -0500
+@@ -148,8 +148,11 @@
+ 		sector_size = DMRAID_SECTOR_SIZE;
+ 
+ 	if (sector_size != DMRAID_SECTOR_SIZE)
++		return 0;
++#if 0
+ 		LOG_ERR(lc, 0, "unsupported sector size %d on %s.",
+ 			sector_size, di->path);
++#endif
+ 
+ 	/* Use size device ioctl in case we didn't get the size from sysfs. */
+ 	if (!di->sectors && !ioctl(fd, BLKGETSIZE, &size))

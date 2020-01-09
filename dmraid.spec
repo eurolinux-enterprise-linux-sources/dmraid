@@ -1,5 +1,5 @@
 #
-# Copyright (C)  Heinz Mauelshagen, 2004-2010 Red Hat GmbH. All rights reserved.
+# Copyright (C)  Heinz Mauelshagen, 2004-2012 Red Hat GmbH. All rights reserved.
 #
 # See file LICENSE at the top of this source tree for license information.
 #
@@ -7,7 +7,7 @@
 Summary: dmraid (Device-mapper RAID tool and library)
 Name: dmraid
 Version: 1.0.0.rc16
-Release: 10%{?dist}
+Release: 11%{?dist}
 License: GPLv2+
 Group: System Environment/Base
 URL: http://people.redhat.com/heinzm/sw/dmraid
@@ -34,6 +34,8 @@ Patch7: avoid_register.patch
 Patch8: libversion.patch
 Patch9: return_error_wo_disks.patch
 Patch10: bz582987_pthread_missing.patch 
+Patch11: bz701501_Mislead_error_message_when_booting_from_4kB_sector_HDD.patch
+Patch12: bz729971_grub_installation_fails_silently_on_dmraid_mirror.patch
 
 %description
 DMRAID supports RAID device discovery, RAID set activation, creation,
@@ -84,6 +86,8 @@ Device failure reporting has to be activated manually by activating the
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
+%patch11 -p1
+%patch12 -p1
 
 %build
 %define _libdir /%{_lib}
@@ -161,6 +165,12 @@ rm -rf $RPM_BUILD_ROOT
 %ghost /var/cache/logwatch/dmeventd/syslogpattern.txt
 
 %changelog
+* Tue Feb 28 2012  Heinz Mauelshagen <heinzm@redhat.com> - 1.0.0.rc16-11
+- Resolves: rhbz#701501
+- Resolves: rhbz#729971
+- Resolves: rhbz#729032
+  (not reproducable any more {zkabelac])
+
 * Thu Aug 05 2010  Zdenek Kabelac <zkabelac@redhat.com> - 1.0.0.rc16-10
 - Fix bad %postun script
 - Resolves: rhbz#615937
