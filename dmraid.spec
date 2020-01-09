@@ -7,7 +7,7 @@
 Summary: dmraid (Device-mapper RAID tool and library)
 Name: dmraid
 Version: 1.0.0.rc16
-Release: 25%{?dist}
+Release: 26%{?dist}
 License: GPLv2+
 Group: System Environment/Base
 URL: http://people.redhat.com/heinzm/sw/dmraid
@@ -24,7 +24,7 @@ Requires(post): systemd >= 195-4
 Obsoletes: dmraid-libs < %{version}-%{release}
 Provides: dmraid-libs = %{version}-%{release}
 Source0: ftp://people.redhat.com/heinzm/sw/dmraid/src/%{name}-%{version}.tar.bz2
-Source1: fedora-dmraid-activation
+Source1: rhel-dmraid-activation
 Source2: dmraid-activation.service
 
 Patch0: dmraid-1.0.0.rc16-test_devices.patch
@@ -137,7 +137,7 @@ install -m 0700 /dev/null $RPM_BUILD_ROOT/var/cache/logwatch/dmeventd/syslogpatt
 # Install systemd unit
 install -d ${RPM_BUILD_ROOT}/%{_prefix}/lib/systemd
 install -d ${RPM_BUILD_ROOT}/%{_unitdir}
-install -m 755 %{SOURCE1} $RPM_BUILD_ROOT/%{_prefix}/lib/systemd/fedora-dmraid-activation
+install -m 755 %{SOURCE1} $RPM_BUILD_ROOT/%{_prefix}/lib/systemd/rhel-dmraid-activation
 install -m 444 %{SOURCE2} $RPM_BUILD_ROOT/%{_unitdir}/dmraid-activation.service
 
 rm -f $RPM_BUILD_ROOT/%{_libdir}/libdmraid.a
@@ -161,7 +161,7 @@ rm -rf $RPM_BUILD_ROOT
 /sbin/dmraid.static
 %{_libdir}/libdmraid.so*
 %{_libdir}/libdmraid-events-isw.so*
-%{_prefix}/lib/systemd/fedora-dmraid-activation
+%{_prefix}/lib/systemd/rhel-dmraid-activation
 %{_unitdir}/dmraid-activation.service
 %ghost /var/lock/dmraid
 
@@ -188,6 +188,9 @@ rm -rf $RPM_BUILD_ROOT
 %ghost /var/cache/logwatch/dmeventd/syslogpattern.txt
 
 %changelog
+* Thu Sep 10 2015 Peter Rajnoha <prajnoha@redhat.com> - 1.0.0.rc16-26
+- Rename /usr/lib/systemd/fedora-dmraid-activaton to rhel-dmraid-activation.
+
 * Wed Jun 18 2014 Heinz Mauelshagen  <heinzm@redhat.com> - 1.0.0.rc16-25
 - Resolves: bz#1073134 (fix library path names)
 

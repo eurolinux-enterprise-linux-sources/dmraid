@@ -7,7 +7,7 @@ Before=lvm2-activation-early.service cryptsetup.target local-fs.target shutdown.
 Wants=systemd-udev-settle.service
 
 [Service]
-ExecStart=/lib/systemd/fedora-dmraid-activation
+ExecStart=/lib/systemd/rhel-dmraid-activation
 Type=oneshot
 
 [Install]
