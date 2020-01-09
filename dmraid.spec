@@ -7,7 +7,7 @@
 Summary: dmraid (Device-mapper RAID tool and library)
 Name: dmraid
 Version: 1.0.0.rc16
-Release: 26%{?dist}
+Release: 26%{?dist}.1
 License: GPLv2+
 Group: System Environment/Base
 URL: http://people.redhat.com/heinzm/sw/dmraid
@@ -104,7 +104,7 @@ Device failure reporting has to be activated manually by activating the
 %patch15 -p1
 
 %build
-%configure --prefix=${RPM_BUILD_ROOT}/usr --sbindir=${RPM_BUILD_ROOT}/sbin --libdir=${RPM_BUILD_ROOT}/%{_libdir} --mandir=${RPM_BUILD_ROOT}/%{_mandir} --includedir=${RPM_BUILD_ROOT}/%{_includedir} --enable-debug --enable-libselinux --enable-libsepol --disable-static_link --enable-led --enable-intel_led
+%configure --prefix=${RPM_BUILD_ROOT}/usr --sbindir=${RPM_BUILD_ROOT}/sbin --libdir=${RPM_BUILD_ROOT}/%{_libdir} --mandir=${RPM_BUILD_ROOT}/%{_mandir} --includedir=${RPM_BUILD_ROOT}/%{_includedir} --enable-debug --enable-libselinux --enable-libsepol --disable-static_link --enable-led --enable-intel_led --disable-testing
 make DESTDIR=$RPM_BUILD_ROOT
 
 %install
@@ -152,6 +152,9 @@ rm -rf $RPM_BUILD_ROOT
 %postun
 /sbin/ldconfig
 
+%preun
+%systemd_preun dmraid-activation.service
+
 # 1. Main package
 %files
 %defattr(-,root,root)
@@ -188,6 +191,10 @@ rm -rf $RPM_BUILD_ROOT
 %ghost /var/cache/logwatch/dmeventd/syslogpattern.txt
 
 %changelog
+* Wed Aug 10 2016 Peter Rajnoha <prajnoha@redhat.com> - 1.0.0.rc16-26.el7_2.1
+- Do not compile testing support which caused scanning of device-mapper devices.
+- Fix missing cleanup of dmraid-activation.service symlink on package removal.
+
 * Thu Sep 10 2015 Peter Rajnoha <prajnoha@redhat.com> - 1.0.0.rc16-26
 - Rename /usr/lib/systemd/fedora-dmraid-activaton to rhel-dmraid-activation.
 
