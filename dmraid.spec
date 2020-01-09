@@ -7,7 +7,7 @@
 Summary: dmraid (Device-mapper RAID tool and library)
 Name: dmraid
 Version: 1.0.0.rc16
-Release: 26%{?dist}.1
+Release: 28%{?dist}
 License: GPLv2+
 Group: System Environment/Base
 URL: http://people.redhat.com/heinzm/sw/dmraid
@@ -191,8 +191,10 @@ rm -rf $RPM_BUILD_ROOT
 %ghost /var/cache/logwatch/dmeventd/syslogpattern.txt
 
 %changelog
-* Wed Aug 10 2016 Peter Rajnoha <prajnoha@redhat.com> - 1.0.0.rc16-26.el7_2.1
+* Thu Aug 04 2016 Peter Rajnoha <prajnoha@redhat.com> - 1.0.0.rc16-28
 - Do not compile testing support which caused scanning of device-mapper devices.
+
+* Mon Jul 11 2016 Peter Rajnoha <prajnoha@redhat.com> - 1.0.0.rc16-27
 - Fix missing cleanup of dmraid-activation.service symlink on package removal.
 
 * Thu Sep 10 2015 Peter Rajnoha <prajnoha@redhat.com> - 1.0.0.rc16-26
