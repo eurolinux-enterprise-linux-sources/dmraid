@@ -1,0 +1,12 @@
+diff -up 1.0.0.rc16/tools/commands.c.old 1.0.0.rc16/tools/commands.c
+--- 1.0.0.rc16/tools/commands.c.old	2014-03-06 14:29:06.513515353 -0500
++++ 1.0.0.rc16/tools/commands.c	2014-03-06 14:29:37.793515923 -0500
+@@ -266,7 +266,7 @@ help(struct lib_context *lc, int arg)
+ 		  "\t[--size [0-9]...[kKgG][bB]]\n"
+ 		  "\t[--str[i[de]] [0-9]...[kK][bB]]\n"
+ 		  "\t{--disk[s] \"device-path[, device-path...\"}\n", c);
+-	log_print(lc, "%s\t{-x|--remove RAID-set} \n");
++	log_print(lc, "%s\t{-x|--remove RAID-set} \n", c);
+ 	log_print(lc, "%s\t{-R|--rebuild} RAID-set [drive_name]\n"
+ 		  "\t[-u|--update_defer]", c);
+ 	log_print(lc, "%s\t[{-f|--format FORMAT}]\n"

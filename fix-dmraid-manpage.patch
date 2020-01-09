@@ -1,0 +1,171 @@
+--- 1.0.0.rc16/man/dmraid.8.orig	2014-07-18 17:19:26.997757425 +0200
++++ 1.0.0.rc16/man/dmraid.8	2014-07-18 17:23:31.878350532 +0200
+@@ -49,7 +49,7 @@
+  -f FORMAT-handler
+ {-C| --create} set 
+  --type raidlevel
+- [--size=setsize --strip stridesize] 
++ [--size setsize --str[ide] stridesize] 
+  --disk "device-path, device-path [, device-path ...]"
+ 
+ .B dmraid
+@@ -87,9 +87,9 @@
+  {-V/--version}
+ 
+ .SH DESCRIPTION
+-dmraid discovers block and software RAID devices (eg, ATARAID)
++dmraid discovers block and software RAID devices (e.g., ATARAID)
+ by using multiple different metadata format handlers which
+-support various formats (eg, Highpoint 37x series).
++support various formats (e.g., Highpoint 37x series).
+ It offers activating RAID sets made up by 2 or more
+ discovered RAID devices, display properties of devices and sets (see option
+ .B -l
+@@ -99,7 +99,7 @@
+ RaidSetName starts with the format name (see
+ .B -l
+ option) which can be used to access all RAID sets of a specific format
+-easily with certain options (eg,
++easily with certain options (e.g.,
+ .B -a
+ below).
+ 
+@@ -116,14 +116,14 @@
+ disables the activation of partitions on them, and
+ .B -Z
+ will make dmraid tell the kernel to remove the partitions from the disks
+-underlying the set, ie if sda is part of the set, remove sda1, sda2, etc.
++underlying the set, i.e. if sda is part of the set, remove sda1, sda2, etc.
+ This prevents applications from directly accessiong the disks bypassing dmraid.
+ RAID set names given on command line don't need to be fully specified
+-(eg, "dmraid -ay sil" would activate all discovered Silicon Image Medley
++(e.g., "dmraid -ay sil" would activate all discovered Silicon Image Medley
+ RAID sets). Option 
+ .B -u
+ defers metadata update in case of rebuild is triggered parallelly with activation.
+-Awoids metadata update to "OK" state if volume is not registered to the event
++Avoids metadata update to "OK" state if volume is not registered to the event
+ monitoring. 
+ Useful if volume is activating at early stage of booting process when registration
+ to the event monitoring is impossible.
+@@ -144,7 +144,7 @@
+ 
+ .TP
+ .I [-d|--debug]...
+-Enable debugging output. Opion can be given multiple times
++Enable debugging output. Option can be given multiple times
+ increasing the debug output level.
+ 
+ .TP
+@@ -174,7 +174,7 @@
+ .B -l
+ for a list of supported format handler names. This is useful to
+ select particular formats in case multiple metadata signatures are found
+-on a device. A comma seperated list of format names can be specified which 
++on a device. A comma separated list of format names can be specified which 
+ may not contain white space.
+ 
+ .TP
+@@ -192,7 +192,7 @@
+ descriptions. Supported RAID levels are listed in parenthesis:
+ .br
+ 
+-S: Span (concatination)
++S: Span (concatenation)
+ .br
+ 0: RAID0 (stripe)
+ .br
+@@ -220,7 +220,7 @@
+ is added to the system. Option
+ .B -u
+ defers metadata update in case of rebuild is triggered. 
+-Awoids metadata update to "OK" state if volume is not registered to the event
++Avoids metadata update to "OK" state if volume is not registered to the event
+ monitoring. 
+ 
+ 1. Using OROM to identify a new drive
+@@ -245,7 +245,7 @@
+ Delete one or all existing software RAID devices from the metadata.
+ 
+ .TP
+-.I -f FORMAT-handler {-C|--create} --type raidlevel [--size=setsize --strip stripsize] --disk "device-path, device-path [,device-path]"
++.I -f FORMAT-handler {-C|--create} --type raidlevel [--size=setsize --strip stripsize] --disk[s] "device-path, device-path [,device-path]"
+ Delete one or all existing Configure a software RAID device  and store the configuration data in a group of hard drive devices consisting of this array. This command requires the following options:
+ 
+ -f FORMAT-handler
+@@ -310,7 +310,7 @@
+ is added to
+ .B -r
+ the RAID metadata gets dumped into a subdirectory named dmraid.format_name
+-(eg. format_name = isw) in files named devicename.dat.
++(e.g. format_name = isw) in files named devicename.dat.
+ The byte offset where the metadata is located on the device is written
+ into files named devicename.offset and the size of the device in sectors
+ into files named devicename.size.
+@@ -362,7 +362,7 @@
+ .TP
+ .I -s... [a|i] [RAID-set...]
+ Display properties of RAID sets. Multiple RAID set names can be given
+-on the command line which don't need to be fully specified (eg, "dmraid -s hpt"
++on the command line which don't need to be fully specified (e.g., "dmraid -s hpt"
+ would display all discovered Highpoint RAID sets). Enter
+ .B -s
+ twice to display RAID subsets too.
+@@ -386,12 +386,12 @@
+ 
+ .TP
+ .I [-v|--verbose]...
+-Enable verbose runtime information output. Opion can be given multiple times
++Enable verbose runtime information output. Option can be given multiple times
+ increasing the verbosity level.
+ 
+ .SH EXAMPLES
+ "dmraid -l" lists all supported metadata formats with their names along with
+-some descriptive information, eg:
++some descriptive information, e.g.:
+ .br
+ hpt37x : (+) Highpoint HPT37X
+ .br
+@@ -416,13 +416,13 @@
+ "dmraid -ay" activates all software RAID sets discovered.
+ 
+ "dmraid -an" deactivates all active software RAID sets which are not open
+-(eg, mounted filesystem on them).
++(e.g., mounted filesystem on them).
+ 
+ "dmraid -ay -f pdc" (pdc looked up from "dmraid -l") activates all
+ software RAID sets with Promise format discovered and ignores all other
+ supported formats.
+ 
+-"dmraid -r" discovers all software RAID devices supported on your system, eg:
++"dmraid -r" discovers all software RAID devices supported on your system, e.g.:
+ .br
+ /dev/dm-46: hpt45x, "hpt45x_chidjhaiaa-0", striped, ok, 320172928 sectors, data@ 0
+ .br
+@@ -434,7 +434,7 @@
+ 
+ 
+ "dmraid -s -s hpt45x_chidjhaiaa" displays properties of
+-set "hpt45x_chidjhaiaa", eg:
++set "hpt45x_chidjhaiaa", e.g.:
+ .br
+ *** Superset
+ .br
+@@ -492,7 +492,7 @@
+ .br
+ 
+ "dmraid -s -ccs hpt45" displays properties in column format of all sets
+-and subsets with hpt45* format, eg:
++and subsets with hpt45* format, e.g.:
+ .br
+ hpt45x_chidjhaiaa,640345856,128,raid10,ok,4,0
+ .br
+@@ -501,7 +501,7 @@
+ hpt45x_chidjhaiaa-b,640345856,128,stripe,ok,2,0
+ 
+ "dmraid -r --sep : -cpath:size" display paths and sizes in sectors for
+-RAID devices in column format using ':' as a delimiter, eg:
++RAID devices in column format using ':' as a delimiter, e.g.:
+ .br
+ /dev/dm-8:320173055
+ .br

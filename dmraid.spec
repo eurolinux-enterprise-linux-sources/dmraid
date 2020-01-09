@@ -1,5 +1,5 @@
 #
-# Copyright (C)  Heinz Mauelshagen, 2004-2010 Red Hat GmbH. All rights reserved.
+# Copyright (C)  Heinz Mauelshagen, 2004-2014 Red Hat GmbH. All rights reserved.
 #
 # See file LICENSE at the top of this source tree for license information.
 #
@@ -7,7 +7,7 @@
 Summary: dmraid (Device-mapper RAID tool and library)
 Name: dmraid
 Version: 1.0.0.rc16
-Release: 23%{?dist}
+Release: 25%{?dist}
 License: GPLv2+
 Group: System Environment/Base
 URL: http://people.redhat.com/heinzm/sw/dmraid
@@ -42,6 +42,9 @@ Patch9: bz635995-data_corruption_during_activation_volume_marked_for_rebuild.pat
 Patch11: bz626417_19-enabling_registration_degraded_volume.patch
 Patch12: bz626417_20-cleanup_some_compilation_warning.patch
 Patch13: bz626417_21-add_option_that_postpones_any_metadata_updates.patch
+
+Patch14: fix-missing-print-help-parm.patch
+Patch15: fix-dmraid-manpage.patch
 
 %description
 DMRAID supports RAID device discovery, RAID set activation, creation,
@@ -97,9 +100,10 @@ Device failure reporting has to be activated manually by activating the
 %patch12 -p1
 %patch13 -p1
 
-%build
-%define _libdir /%{_lib}
+%patch14 -p1
+%patch15 -p1
 
+%build
 %configure --prefix=${RPM_BUILD_ROOT}/usr --sbindir=${RPM_BUILD_ROOT}/sbin --libdir=${RPM_BUILD_ROOT}/%{_libdir} --mandir=${RPM_BUILD_ROOT}/%{_mandir} --includedir=${RPM_BUILD_ROOT}/%{_includedir} --enable-debug --enable-libselinux --enable-libsepol --disable-static_link --enable-led --enable-intel_led
 make DESTDIR=$RPM_BUILD_ROOT
 
@@ -184,6 +188,13 @@ rm -rf $RPM_BUILD_ROOT
 %ghost /var/cache/logwatch/dmeventd/syslogpattern.txt
 
 %changelog
+* Wed Jun 18 2014 Heinz Mauelshagen  <heinzm@redhat.com> - 1.0.0.rc16-25
+- Resolves: bz#1073134 (fix library path names)
+
+* Wed Jun 18 2014 Heinz Mauelshagen  <heinzm@redhat.com> - 1.0.0.rc16-24
+- Resolves: bz#1073134
+- Resolves: bz#948384
+
 * Fri Jan 24 2014 Daniel Mach <dmach@redhat.com> - 1.0.0.rc16-23
 - Mass rebuild 2014-01-24
 
